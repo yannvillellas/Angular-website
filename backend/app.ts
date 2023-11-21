@@ -14,6 +14,8 @@ interface LearningPackage {
 }
 
 let idGenerator = 1;
+
+let test = 4;
 function newId() {
     return idGenerator++;
 }
