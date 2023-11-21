@@ -1,4 +1,3 @@
-import express, { Request, Response } from 'express';
 
 // Interface LearningPackage
 interface LearningPackage {
