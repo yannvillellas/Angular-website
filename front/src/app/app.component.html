@@ -1,13 +1,34 @@
-<!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
-<form (ngSubmit)="addNewLearningPackage(packageTitle)">
-  <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
-  <button type="submit">Add Package</button>
-</form>
+<div class="toolbar" role="banner">
 
+    <a href="">
+        <img
+                width="60"
+                alt="Eagle Logo"
+                src="assets/images/eagle.png"
+        />
+    </a>
+    <div class="topnav">
+        <a href="/lessons">Lessons</a>
+        <a href="/about">About</a>
+    </div>
+    <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+
+</div>
 <!-- Afficher la liste des packages -->
 <ul>
+
   <li *ngFor="let package of learningPackages">{{ package.title }}</li>
+
 </ul>
+<!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
+<form (ngSubmit)="addNewLearningPackage(packageTitle)">
+    <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
+    <button type="submit">Add Package</button>
+</form>
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -313,24 +334,7 @@
 </style>
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <a href="">
-        <img
-        width="60"
-        alt="Eagle Logo"
-        src="assets/images/eagle.png"
-      />
-  </a>
-    <div class="topnav">
-        <a href="/lessons">Lessons</a>
-        <a href="/about">About</a>
-    </div>
-    <div class="spacer"></div>
-</div>
 
-<div class="content" role="main">
-
-</div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
