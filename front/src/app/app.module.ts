@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
+import {FormsModule} from "@angular/forms";
 import { LessonsComponent } from './lessons/lessons.component';
 import { AboutComponent } from './about/about.component';
 
@@ -17,7 +18,8 @@ import { AboutComponent } from './about/about.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
