@@ -30,7 +30,7 @@ yarn-error.log
 .history/*
 
 #Angular
-.angular/cache
+front/.angular/cache
 
 
 # Miscellaneous
