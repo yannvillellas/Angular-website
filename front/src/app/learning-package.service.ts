@@ -13,4 +13,7 @@ export class LearningPackageService {
     getLearningPackages(): Observable<any> {
         return this.http.get(this.apiUrl);
     }
+  addLearningPackage(newPackage: any): Observable<any> {
+    return this.http.post(this.apiUrl, newPackage);
+  }
 }
