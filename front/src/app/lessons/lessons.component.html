@@ -1,1 +1,14 @@
-<p>lessons works!</p>
+<!-- Afficher la liste des packages -->
+<div class="content" role="main">
+
+</div>
+<ul>
+
+    <li *ngFor="let package of learningPackages">{{ package.title }}</li>
+
+</ul>
+<!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
+<form (ngSubmit)="addNewLearningPackage(packageTitle)">
+    <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
+    <button type="submit">Add Package</button>
+</form>
