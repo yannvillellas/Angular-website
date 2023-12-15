@@ -8,6 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule} from "@angular/forms";
 import { LessonsComponent } from './lessons/lessons.component';
 import { AboutComponent } from './about/about.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AboutComponent } from './about/about.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
