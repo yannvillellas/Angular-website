@@ -7,5 +7,5 @@ import { LearningPackageService } from './learning-package.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-
+  title:string = 'angular-website';
 }

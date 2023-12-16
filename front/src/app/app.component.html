@@ -1,13 +1,19 @@
-<div class="navbar" role="banner">
-    <a href="#">
-        <img width="60" alt="Eagle Logo" src="assets/images/eagle.png" />
-    </a>
-    <div class="nav-links">
-        <a href="/lessons">Lessons</a>
-        <a href="/about">About</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary static-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="assets/images/eagle.png" alt="Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <a class="nav-link" [routerLink]="['/lessons']" [routerLinkActive]="['active']">Lessons</a>
+                <a class="nav-link" [routerLink]="['/about']" [routerLinkActive]="['active']">About</a>
+            </ul>
+        </div>
     </div>
-    <div class="spacer"></div>
-</div>
+</nav>
 
 <div class="content" role="main"></div>
 
