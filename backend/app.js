@@ -10,10 +10,19 @@ function newId() {
     return idGenerator++;
 }
 let learningPackages = [
-    { id: newId(), title: 'Learn TypeScript' },
-    { id: newId(), title: 'Learn Angular' },
-    { id: newId(), title: 'Learn NodeJs' },
-    { id: newId(), title: 'Learn Express' },
+    {
+        id: newId(),
+        title: 'Learn test12',
+        description: 'A comprehensive guide to learning TypeScript',
+        category: 'Programming',
+        targetAudience: 'Developers',
+        difficultyLevel: 3,
+        questions: {
+            'What is TypeScript?': 'A programming language',
+            'What is the command to compile a TypeScript file?': 'tsc',
+            // Plus de paires question-réponse...
+        }
+    },
 ];
 // Route for "/api/liveness"
 app.get('/api/liveness', (req, res) => {
