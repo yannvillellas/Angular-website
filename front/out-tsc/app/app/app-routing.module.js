@@ -43,7 +43,9 @@ const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const lessons_component_1 = require("./lessons/lessons.component");
 const about_component_1 = require("./about/about.component");
+const home_component_1 = require("./home/home.component");
 const routes = [
+    { path: "", component: home_component_1.HomeComponent },
     { path: "lessons", component: lessons_component_1.LessonsComponent },
     { path: "about", component: about_component_1.AboutComponent }
 ];

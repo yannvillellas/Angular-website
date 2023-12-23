@@ -48,12 +48,14 @@ const platform_browser_1 = require("@angular/platform-browser");
 const http_1 = require("@angular/common/http");
 const forms_1 = require("@angular/forms");
 const ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
+const home_component_1 = require("./home/home.component");
 let AppModule = exports.AppModule = (() => {
     let _classDecorators = [(0, core_1.NgModule)({
             declarations: [
                 app_component_1.AppComponent,
                 lessons_component_1.LessonsComponent,
-                about_component_1.AboutComponent
+                about_component_1.AboutComponent,
+                home_component_1.HomeComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
