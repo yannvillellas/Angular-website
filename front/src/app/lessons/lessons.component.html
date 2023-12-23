@@ -1,34 +1,31 @@
-<div class="content container-fluid" role="main">
-    <ul>
+<div class="bg-image d-flex justify-content-center align-items-center"
+     style="
+        background-image: url('https://www.codeur.com/tuto/wp-content/uploads/2022/01/pexels-roberto-nickson-2559941-1.jpg');
+        background-repeat:no-repeat;
+        background-size:cover;
+        background-position:center center;
+        height: calc(100vh - 66px);">
+    <div class="container bg-light rounded-5 p-5 dropdown-show">
+        <ul>
+            <li *ngFor="let package of learningPackages">
+                <div class="dropdown">
+                    {{ package.title }}
+                    <button class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        ...
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" href="#">Add Item</a>
+                        <a class="dropdown-item" href="#">Rename</a>
+                    </div>
+                </div>
+            </li>
 
-        <li *ngFor="let package of learningPackages">{{ package.title }}</li>
-
-    </ul>
-    <!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
-    <form (ngSubmit)="addNewLearningPackage(packageTitle)">
-        <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
-        <button type="submit">Add Package</button>
-    </form>
-
-    <nav class="navbar navbar-expand-lg navbar-brand bg-white navbar-expand pt-3">
-        <div class="container-fluid mx-auto" style="max-width: 30%; ">
-            <a class="navbar-brand " href="#">package</a>
-            <div class="collapse navbar-collapse " id="navbarNavDarkDropdown">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            ...
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Delete</a></li>
-                            <li><a class="dropdown-item" href="#">Add item</a></li>
-                            <li><a class="dropdown-item" href="#">Rename</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
+        </ul>
+        <!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
+        <form (ngSubmit)="addNewLearningPackage(packageTitle)">
+            <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
+            <button type="submit">Add Package</button>
+        </form>
+    </div>
 </div>
