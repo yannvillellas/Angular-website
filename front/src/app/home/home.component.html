@@ -5,13 +5,21 @@
         background-size: cover;
         background-position: center center;
         height: calc(100vh - 66px);">
+    <form class="d-flex" >
+        <div class="form-group flex-grow-1 me-1">
+            <input class="form-control rounded-2" type="number" placeholder="Enter your package id" name="packageId" required>
+        </div>
+        <div class="form-group ms-1">
+            <button class="btn btn-primary rounded-2" type="submit">Go with questions</button>
+        </div>
+    </form>
     <div class="container m-2 bg-light rounded-5 p-5 text-center">
         <h1>TITLE</h1>
         <!-- todo -->
     </div>
     <div class="rounded-2 p-1">
-        <button class="btn btn-primary m-2">BUTTON 1</button>
-        <button class="btn btn-primary m-2">BUTTON 2</button>
+        <button class="btn btn-primary m-2 d-none">Previous answer</button> <!-- todo if possible -->
+        <button class="btn btn-primary m-2">Show answer</button>
     </div>
 
 </div>
