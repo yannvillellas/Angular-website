@@ -13,14 +13,12 @@
             <button class="btn btn-primary rounded-2" (click)="getPackageWithRandomQuestion(selectedPackageId)">Go with questions</button>
         </div>
     </div>
-    <div class="container m-2 bg-light rounded-5 p-5 text-center">
+    <div class="container m-2 bg-light rounded-5 p-5 text-center" *ngIf="randomQuestion">
         <h1>{{ randomQuestion }}</h1>
+        <h2 *ngIf="showCorrectAnswer">{{ correctAnswer }}</h2>
     </div>
     <div class="rounded-2 p-1">
         <button class="btn btn-primary m-2 d-none">Previous answer</button> <!-- todo if possible -->
         <button class="btn btn-primary m-2" (click)="validateAnswer()">Show answer</button>
-    </div>
-    <div *ngIf="showCorrectAnswer">
-        <p><strong>Correct Answer:</strong> {{ correctAnswer }}</p>
     </div>
 </div>
