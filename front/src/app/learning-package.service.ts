@@ -19,6 +19,13 @@ export class LearningPackageService {
     }
     addLearningPackage(newPackage: any): Observable<any> {
         return this.http.post(this.apiUrl, newPackage);
-  }
+    }
+
+    deleteLearningPackage(id: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+    }
+
+
+
 
 }

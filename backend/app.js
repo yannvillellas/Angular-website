@@ -51,6 +51,21 @@ app.post('/api/learning-package', (req, res) => {
     learningPackages.push(item);
     res.send(item);
 });
+app.delete('/api/learning-package/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(`Attempting to delete package with ID: ${id}`);
+    const index = learningPackages.findIndex(pkg => pkg.id === id);
+    console.log(`Found package at index: ${index}`);
+    if (index !== -1) {
+        learningPackages.splice(index, 1);
+        res.status(200).send(`Learning package with id: ${id} has been deleted`);
+        console.log('Package deleted');
+    }
+    else {
+        res.status(404).send(`Learning package not found for id: ${id}`);
+        console.log('Package not found');
+    }
+});
 // Start the Express server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

@@ -38,39 +38,62 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LearningPackageService = void 0;
+exports.HomeComponent = void 0;
 const core_1 = require("@angular/core");
-let LearningPackageService = exports.LearningPackageService = (() => {
-    let _classDecorators = [(0, core_1.Injectable)({
-            providedIn: 'root'
+let HomeComponent = exports.HomeComponent = (() => {
+    let _classDecorators = [(0, core_1.Component)({
+            selector: 'app-home',
+            templateUrl: './home.component.html',
+            styleUrls: ['./home.component.css']
         })];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    var LearningPackageService = _classThis = class {
-        constructor(http) {
-            this.http = http;
-            this.apiUrl = 'http://localhost:4200/api/learning-package';
+    var HomeComponent = _classThis = class {
+        constructor(learningPackageService) {
+            this.learningPackageService = learningPackageService;
+            this.title = 'angular-website';
+            this.learningPackages = [];
+            this.userAnswer = '';
+            this.showCorrectAnswer = false;
         }
-        getLearningPackages() {
-            return this.http.get(this.apiUrl);
+        addNewLearningPackage(packageTitle) {
+            const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
+            this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
+                console.log('Package added:', data);
+                this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
+            }, error => console.error('Error adding package:', error));
         }
-        getLearningPackageById(id) {
-            return this.http.get(`${this.apiUrl}/${id}`);
+        getPackageWithRandomQuestion(id) {
+            this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
+                if (packageData && packageData.questions) {
+                    const question = this.selectRandomQuestion(packageData.questions);
+                    this.randomQuestion = question;
+                    this.correctAnswer = packageData.questions[question];
+                    this.showCorrectAnswer = false; // Cache la réponse correcte initialement
+                }
+                else {
+                    this.randomQuestion = null;
+                }
+            });
         }
-        addLearningPackage(newPackage) {
-            return this.http.post(this.apiUrl, newPackage);
+        validateAnswer() {
+            this.showCorrectAnswer = true; // Affiche la réponse correcte
         }
-        deleteLearningPackage(id) {
-            return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+        selectRandomQuestion(questions) {
+            const questionKeys = Object.keys(questions);
+            if (questionKeys.length === 0)
+                return null;
+            const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
+            return randomKey;
         }
     };
-    __setFunctionName(_classThis, "LearningPackageService");
+    __setFunctionName(_classThis, "HomeComponent");
     (() => {
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name }, null, _classExtraInitializers);
-        LearningPackageService = _classThis = _classDescriptor.value;
+        HomeComponent = _classThis = _classDescriptor.value;
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return LearningPackageService = _classThis;
+    return HomeComponent = _classThis;
 })();
-//# sourceMappingURL=learning-package.service.js.map
+//# sourceMappingURL=home.component.js.map

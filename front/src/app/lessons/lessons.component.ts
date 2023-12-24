@@ -10,11 +10,6 @@ export class LessonsComponent implements OnInit{
   title = 'angular-website';
   learningPackages: any=[];
   packageTitle: any;
-  randomQuestion: string;
-  selectedPackageId: any;
-  userAnswer: string = '';
-  correctAnswer: string;
-  showCorrectAnswer: boolean = false;
 
   constructor(private learningPackageService: LearningPackageService) { }
 
@@ -29,30 +24,18 @@ export class LessonsComponent implements OnInit{
     );
   }
 
-  getPackageWithRandomQuestion(id: number): void {
-    this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
-      if (packageData && packageData.questions) {
-        const question = this.selectRandomQuestion(packageData.questions);
-        this.randomQuestion = question;
-        this.correctAnswer = packageData.questions[question];
-        this.showCorrectAnswer = false; // Cache la réponse correcte initialement
-      } else {
-        this.randomQuestion = null;
-      }
+  deletePackage(id: number): void {
+    this.learningPackageService.deleteLearningPackage(id).subscribe(() => {
+      // Filtrer le package supprimé de la liste 'learningPackages'
+      this.learningPackageService.getLearningPackages().subscribe(data => {
+        console.log(data);
+        this.learningPackages = data;
+      });
+      this.learningPackages = this.learningPackages.filter(pkg => pkg.id !== id);
+    }, error => {
+      console.error('Error deleting package:', error);
     });
   }
-
-  validateAnswer(): void {
-    this.showCorrectAnswer = true; // Affiche la réponse correcte
-  }
-
-  selectRandomQuestion(questions: Record<string, string>): string {
-    const questionKeys = Object.keys(questions);
-    if (questionKeys.length === 0) return null;
-    const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
-    return randomKey;
-  }
-
 
   ngOnInit(): void {
     this.learningPackageService.getLearningPackages().subscribe(data => {

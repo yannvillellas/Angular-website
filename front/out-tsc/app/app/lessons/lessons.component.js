@@ -54,8 +54,6 @@ let LessonsComponent = exports.LessonsComponent = (() => {
             this.learningPackageService = learningPackageService;
             this.title = 'angular-website';
             this.learningPackages = [];
-            this.userAnswer = '';
-            this.showCorrectAnswer = false;
         }
         addNewLearningPackage(packageTitle) {
             const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
@@ -64,28 +62,17 @@ let LessonsComponent = exports.LessonsComponent = (() => {
                 this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
             }, error => console.error('Error adding package:', error));
         }
-        getPackageWithRandomQuestion(id) {
-            this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
-                if (packageData && packageData.questions) {
-                    const question = this.selectRandomQuestion(packageData.questions);
-                    this.randomQuestion = question;
-                    this.correctAnswer = packageData.questions[question];
-                    this.showCorrectAnswer = false; // Cache la réponse correcte initialement
-                }
-                else {
-                    this.randomQuestion = null;
-                }
+        deletePackage(id) {
+            this.learningPackageService.deleteLearningPackage(id).subscribe(() => {
+                // Filtrer le package supprimé de la liste 'learningPackages'
+                this.learningPackageService.getLearningPackages().subscribe(data => {
+                    console.log(data);
+                    this.learningPackages = data;
+                });
+                this.learningPackages = this.learningPackages.filter(pkg => pkg.id !== id);
+            }, error => {
+                console.error('Error deleting package:', error);
             });
-        }
-        validateAnswer() {
-            this.showCorrectAnswer = true; // Affiche la réponse correcte
-        }
-        selectRandomQuestion(questions) {
-            const questionKeys = Object.keys(questions);
-            if (questionKeys.length === 0)
-                return null;
-            const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
-            return randomKey;
         }
         ngOnInit() {
             this.learningPackageService.getLearningPackages().subscribe(data => {
