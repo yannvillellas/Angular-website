@@ -19,6 +19,7 @@ export class LessonsComponent implements OnInit{
         data => {
           console.log('Package added:', data);
           this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
+          this.packageTitle = ''; // Réinitialise le champ de saisie
         },
         error => console.error('Error adding package:', error)
     );

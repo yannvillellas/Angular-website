@@ -60,6 +60,7 @@ let LessonsComponent = exports.LessonsComponent = (() => {
             this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
                 console.log('Package added:', data);
                 this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
+                this.packageTitle = ''; // Réinitialise le champ de saisie
             }, error => console.error('Error adding package:', error));
         }
         deletePackage(id) {
