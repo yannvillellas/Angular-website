@@ -13,7 +13,19 @@ export class LearningPackageService {
     getLearningPackages(): Observable<any> {
         return this.http.get(this.apiUrl);
     }
-  addLearningPackage(newPackage: any): Observable<any> {
-    return this.http.post(this.apiUrl, newPackage);
-  }
+
+    getLearningPackageById(id: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/${id}`);
+    }
+    addLearningPackage(newPackage: any): Observable<any> {
+        return this.http.post(this.apiUrl, newPackage);
+    }
+
+    deleteLearningPackage(id: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+    }
+
+
+
+
 }

@@ -7,40 +7,21 @@ interface LearningPackage {
     category: string;
     targetAudience: string;
     difficultyLevel: number;
+    questions: Record<string, string>;
 }
 
 
-const learningPackages: LearningPackage[] = [
-    {
-        id: 1,
-        title: "Learn TypeScript",
-        description: "Learn the TypeScript programming language",
-        category: "Programming",
-        targetAudience: "Developers",
-        difficultyLevel: 5,
-    },
-    {
-        id: 2,
-        title: "Learn Node.js",
-        description: "Learn server-side JavaScript with Node.js",
-        category: "Programming",
-        targetAudience: "Developers",
-        difficultyLevel: 6,
-    },
-    {
-        id: 3,
-        title: "Learn HTML",
-        description: "Learn HyperText Markup Language (HTML)",
-        category: "Web Development",
-        targetAudience: "Beginners",
-        difficultyLevel: 3,
-    },
-    {
-        id: 4,
-        title: "Learn Angular",
-        description: "Learn the Angular framework for web development",
-        category: "Web Development",
-        targetAudience: "Front-end Developers",
-        difficultyLevel: 8,
-    },
-];
+const learningPackageExample: LearningPackage = {
+    id: 1,
+    title: 'Learn TypeScript',
+    description: 'A comprehensive guide to learning TypeScript',
+    category: 'Programming',
+    targetAudience: 'Developers',
+    difficultyLevel: 3,
+    questions: {
+        'What is TypeScript?': 'A programming language',
+        'What is the command to compile a TypeScript file?': 'tsc',
+        // Plus de paires question-réponse...
+    }
+};
+

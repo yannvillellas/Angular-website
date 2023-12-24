@@ -13,4 +13,38 @@
         <button class="btn btn-primary m-2">BUTTON 1</button>
         <button class="btn btn-primary m-2">BUTTON 2</button>
     </div>
+
 </div>
+
+<div class="content container-fluid" role="main">
+    <ul>
+
+        <li *ngFor="let package of learningPackages">{{ package.title }}</li>
+
+    </ul>
+    <!--Ajouter un formulaire pour soumettre de nouveaux learning packages-->
+    <form (ngSubmit)="addNewLearningPackage(packageTitle)">
+        <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
+        <button type="submit">Add Package</button>
+    </form>
+
+
+    <!--Zone de saisie pour l'ID du package-->
+    <input type="number" [(ngModel)]="selectedPackageId" placeholder="Enter Package ID">
+    <button (click)="getPackageWithRandomQuestion(selectedPackageId)">Get Random Question</button>
+
+    <!--Affiche la question aléatoire-->
+    <div *ngIf="randomQuestion">
+        <p><strong>Question:</strong> {{ randomQuestion }}</p>
+        <textarea [(ngModel)]="userAnswer" placeholder="Write your answer here"></textarea>
+        <button (click)="validateAnswer()">Validate My Answer</button>
+    </div>
+
+    <!-- Affiche la réponse attendue après validation -->
+    <div *ngIf="showCorrectAnswer">
+        <p><strong>Correct Answer:</strong> {{ correctAnswer }}</p>
+    </div>
+
+
+</div>
+

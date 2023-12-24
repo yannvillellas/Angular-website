@@ -10,10 +10,19 @@ function newId() {
     return idGenerator++;
 }
 let learningPackages = [
-    { id: newId(), title: 'Learn TypeScript' },
-    { id: newId(), title: 'Learn Angular' },
-    { id: newId(), title: 'Learn NodeJs' },
-    { id: newId(), title: 'Learn Express' },
+    {
+        id: newId(),
+        title: 'Learn test12',
+        description: 'A comprehensive guide to learning TypeScript',
+        category: 'Programming',
+        targetAudience: 'Developers',
+        difficultyLevel: 3,
+        questions: {
+            'What is TypeScript?': 'A programming language',
+            'What is the command to compile a TypeScript file?': 'tsc',
+            // Plus de paires question-réponse...
+        }
+    },
 ];
 // Route for "/api/liveness"
 app.get('/api/liveness', (req, res) => {
@@ -41,6 +50,21 @@ app.post('/api/learning-package', (req, res) => {
     item.id = newId();
     learningPackages.push(item);
     res.send(item);
+});
+app.delete('/api/learning-package/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(`Attempting to delete package with ID: ${id}`);
+    const index = learningPackages.findIndex(pkg => pkg.id === id);
+    console.log(`Found package at index: ${index}`);
+    if (index !== -1) {
+        learningPackages.splice(index, 1);
+        res.status(200).send(`Learning package with id: ${id} has been deleted`);
+        console.log('Package deleted');
+    }
+    else {
+        res.status(404).send(`Learning package not found for id: ${id}`);
+        console.log('Package not found');
+    }
 });
 // Start the Express server
 app.listen(port, () => {
