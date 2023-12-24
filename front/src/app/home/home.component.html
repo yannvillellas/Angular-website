@@ -1,25 +1,20 @@
-<div class="bg-image d-flex flex-column align-items-center justify-content-center"
+<div class="bg-image d-flex flex-column align-items-center justify-content-center" role="main"
      style="
         background-image: url('https://www.codeur.com/tuto/wp-content/uploads/2022/01/pexels-roberto-nickson-2559941-1.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
         height: calc(100vh - 66px);">
-    <form class="d-flex" >
+    <div class="d-flex" >
         <div class="form-group flex-grow-1 me-1">
-            <input class="form-control rounded-2" type="number" placeholder="Enter your package id" [(ngModel)]="selectedPackageId" required>
+            <input class="form-control rounded-2" type="number" placeholder="Enter your package id" [(ngModel)]="selectedPackageId">
         </div>
         <div class="form-group ms-1">
             <button class="btn btn-primary rounded-2" (click)="getPackageWithRandomQuestion(selectedPackageId)">Go with questions</button>
         </div>
-    </form>
+    </div>
     <div class="container m-2 bg-light rounded-5 p-5 text-center">
         <h1>{{ randomQuestion }}</h1>
-        <!--<div >
-            <p><strong>Question:</strong> {{ randomQuestion }}</p>
-            <textarea [(ngModel)]="userAnswer" placeholder="Write your answer here"></textarea>
-            <button (click)="validateAnswer()">Validate My Answer</button>
-        </div>-->
     </div>
     <div class="rounded-2 p-1">
         <button class="btn btn-primary m-2 d-none">Previous answer</button> <!-- todo if possible -->
@@ -29,25 +24,3 @@
         <p><strong>Correct Answer:</strong> {{ correctAnswer }}</p>
     </div>
 </div>
-
-<!--<div class="content container-fluid" role="main">
-
-    &lt;!&ndash;Zone de saisie pour l'ID du package&ndash;&gt;
-    <input type="number" [(ngModel)]="selectedPackageId" placeholder="Enter Package ID">
-    <button (click)="getPackageWithRandomQuestion(selectedPackageId)">Get Random Question</button>
-
-    &lt;!&ndash;Affiche la question aléatoire&ndash;&gt;
-    <div *ngIf="randomQuestion">
-        <p><strong>Question:</strong> {{ randomQuestion }}</p>
-        <textarea [(ngModel)]="userAnswer" placeholder="Write your answer here"></textarea>
-        <button (click)="validateAnswer()">Validate My Answer</button>
-    </div>
-
-    &lt;!&ndash; Affiche la réponse attendue après validation &ndash;&gt;
-    <div *ngIf="showCorrectAnswer">
-        <p><strong>Correct Answer:</strong> {{ correctAnswer }}</p>
-    </div>
-
-
-</div>-->
-

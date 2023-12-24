@@ -18,17 +18,6 @@ export class HomeComponent {
 
   constructor(private learningPackageService: LearningPackageService) { }
 
-  addNewLearningPackage(packageTitle: string): void {
-    const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
-    this.learningPackageService.addLearningPackage(newPackage).subscribe(
-        data => {
-          console.log('Package added:', data);
-          this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
-        },
-        error => console.error('Error adding package:', error)
-    );
-  }
-
   getPackageWithRandomQuestion(id: number): void {
     this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
       if (packageData && packageData.questions) {
