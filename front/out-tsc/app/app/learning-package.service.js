@@ -53,7 +53,7 @@ let LearningPackageService = exports.LearningPackageService = (() => {
             this.apiUrl = 'http://localhost:4200/api/learning-package';
         }
         getLearningPackages() {
-            return this.http.get(this.apiUrl);
+            return this.http.get(`${this.apiUrl}`);
         }
         getLearningPackageById(id) {
             return this.http.get(`${this.apiUrl}/${id}`);
@@ -63,6 +63,10 @@ let LearningPackageService = exports.LearningPackageService = (() => {
         }
         deleteLearningPackage(id) {
             return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+        }
+        updateQuestionKnowledgeLevel(packageId, questionIndex, knowledgeLevel) {
+            const body = { userKnowledgeLevel: knowledgeLevel };
+            return this.http.put(`${this.apiUrl}/${packageId}/question/${questionIndex}`, body, { responseType: 'text' });
         }
     };
     __setFunctionName(_classThis, "LearningPackageService");

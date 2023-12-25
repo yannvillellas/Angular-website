@@ -18,6 +18,11 @@
     <div class="container m-2 bg-light rounded-5 p-5 text-center" *ngIf="randomQuestion">
         <h1>{{ randomQuestion }}</h1>
         <h2 *ngIf="showCorrectAnswer">{{ correctAnswer }}</h2>
+        <div *ngIf="showCorrectAnswer" class="btn-group mt-3">
+            <button class="btn btn-success" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'high')">Easy</button>
+            <button class="btn btn-warning" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'medium')">Medium</button>
+            <button class="btn btn-danger" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'low')">Hard</button>
+        </div>
     </div>
     <div class="rounded-2 p-1">
         <button class="btn btn-primary m-2 d-none">Previous answer</button> <!-- todo if possible -->
