@@ -41,4 +41,12 @@ export class HomeComponent {
     const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
     return randomKey;
   }
+
+
+  ngOnInit(): void {
+    this.learningPackageService.getLearningPackages().subscribe(data => {
+      console.log(data);
+      this.learningPackages = data;
+    });
+  }
 }

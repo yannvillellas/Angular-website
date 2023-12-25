@@ -57,13 +57,6 @@ let HomeComponent = exports.HomeComponent = (() => {
             this.userAnswer = '';
             this.showCorrectAnswer = false;
         }
-        addNewLearningPackage(packageTitle) {
-            const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
-            this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
-                console.log('Package added:', data);
-                this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
-            }, error => console.error('Error adding package:', error));
-        }
         getPackageWithRandomQuestion(id) {
             this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
                 if (packageData && packageData.questions) {
@@ -86,6 +79,12 @@ let HomeComponent = exports.HomeComponent = (() => {
                 return null;
             const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
             return randomKey;
+        }
+        ngOnInit() {
+            this.learningPackageService.getLearningPackages().subscribe(data => {
+                console.log(data);
+                this.learningPackages = data;
+            });
         }
     };
     __setFunctionName(_classThis, "HomeComponent");
