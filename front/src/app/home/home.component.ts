@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit{
     this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(
         response => {
           console.log('Knowledge level updated:', response);
+          this.getPackageWithRandomQuestion(this.selectedPackageId);
         },
         error => {
           console.error('Error updating knowledge level:', error);
