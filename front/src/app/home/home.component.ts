@@ -9,13 +9,17 @@ import { Question } from '../question.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-  title = 'angular-website';
   learningPackages: LearningPackage[] = [];
   randomQuestion: string;
   selectedPackageId: any;
   correctAnswer: string;
   showCorrectAnswer: boolean = false;
   selectedQuestionIndex: number;
+
+  previousRandomQuestion: string;
+  previousSelectedPackageId: any;
+  previousCorrectAnswer: string;
+  previousSelectedQuestionIndex: number;
 
   constructor(private learningPackageService: LearningPackageService) { }
 
@@ -64,6 +68,11 @@ export class HomeComponent implements OnInit{
     this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(
         response => {
           console.log('Knowledge level updated:', response);
+          //save question to go back to previous
+          this.previousRandomQuestion = this.randomQuestion;
+          this.previousSelectedPackageId = this.selectedPackageId;
+          this.previousCorrectAnswer =this.correctAnswer;
+          this.previousSelectedQuestionIndex = this.selectedQuestionIndex;
           this.getPackageWithRandomQuestion(this.selectedPackageId);
         },
         error => {
@@ -72,6 +81,13 @@ export class HomeComponent implements OnInit{
     );
   }
 
+previousQuestion(): void {
+  this.randomQuestion = this.previousRandomQuestion;
+  this.selectedPackageId = this.previousSelectedPackageId;
+  this.correctAnswer = this.previousCorrectAnswer;
+  this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
+  this.showCorrectAnswer =true; //permet d'afficher directement la réponse de la dernière question
+}
 
   ngOnInit(): void {
     this.learningPackageService.getLearningPackages().subscribe(data => {
