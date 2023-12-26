@@ -21,6 +21,9 @@ export class HomeComponent implements OnInit{
   previousCorrectAnswer: string;
   previousSelectedQuestionIndex: number;
 
+  showAnswerButton: boolean = true;
+  showPreviousButton: boolean = false;
+
   constructor(private learningPackageService: LearningPackageService) { }
 
   getPackageWithRandomQuestion(id: number): void {
@@ -39,6 +42,9 @@ export class HomeComponent implements OnInit{
         this.randomQuestion = null;
       }
     });
+    // reset les boutons
+    this.showAnswerButton = true;
+    this.showPreviousButton = false;
   }
 
   selectRandomQuestion(questions: Question[]): Question {
@@ -61,6 +67,9 @@ export class HomeComponent implements OnInit{
 
   validateAnswer(): void {
     this.showCorrectAnswer = true; // Affiche la réponse correcte
+
+    this.showAnswerButton = false;
+    this.showPreviousButton = false;
   }
 
 
@@ -74,6 +83,8 @@ export class HomeComponent implements OnInit{
           this.previousCorrectAnswer =this.correctAnswer;
           this.previousSelectedQuestionIndex = this.selectedQuestionIndex;
           this.getPackageWithRandomQuestion(this.selectedPackageId);
+
+          this.showPreviousButton = true;
         },
         error => {
           console.error('Error updating knowledge level:', error);
@@ -86,7 +97,11 @@ previousQuestion(): void {
   this.selectedPackageId = this.previousSelectedPackageId;
   this.correctAnswer = this.previousCorrectAnswer;
   this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
-  this.showCorrectAnswer =true; //permet d'afficher directement la réponse de la dernière question
+  this.showCorrectAnswer =true; // permet d'afficher directement la réponse de la dernière question
+
+  // reset les boutons
+  this.showAnswerButton = false;
+  this.showPreviousButton = false;
 }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@
         height: calc(100vh - 66px);">
     <div class="d-flex" >
         <div class="form-group flex-grow-1 me-1">
-            <select class="form-control rounded-2" [(ngModel)]="selectedPackageId">
+            <select class="form-select rounded-2" [(ngModel)]="selectedPackageId">
                 <option *ngFor="let package of learningPackages" [value]="package.id">{{ package.title }}</option>
             </select>
         </div>
@@ -17,16 +17,15 @@
     </div>
     <div class="container m-2 bg-light rounded-5 p-5 text-center" *ngIf="randomQuestion">
         <h1>{{ randomQuestion }}</h1>
-        <h2 *ngIf="showCorrectAnswer">{{ correctAnswer }}</h2>
+        <h2 class="text-primary" *ngIf="showCorrectAnswer">{{ correctAnswer }}</h2>
+    </div>
+    <div class="rounded-2 p-1">
+        <button class="btn btn-secondary m-2" (click)="previousQuestion()" *ngIf="randomQuestion && showPreviousButton">Previous answer</button>
+        <button class="btn btn-primary m-2" (click)="validateAnswer()" *ngIf="randomQuestion && showAnswerButton">Show answer</button>
         <div *ngIf="showCorrectAnswer" class="btn-group mt-3">
             <button class="btn btn-success" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'high')">Easy</button>
             <button class="btn btn-warning" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'medium')">Medium</button>
             <button class="btn btn-danger" (click)="updateUserKnowledgeLevel(selectedQuestionIndex,'low')">Hard</button>
         </div>
     </div>
-    <div class="rounded-2 p-1">
-        <button class="btn btn-primary m-2" (click)="previousQuestion()">Previous answer</button>
-        <button class="btn btn-primary m-2" (click)="validateAnswer()">Show answer</button>
-    </div>
-<!--    todo show buttons when completed to add feedback about when to get next question-->
 </div>
