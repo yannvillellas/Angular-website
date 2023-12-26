@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LessonsComponent } from './lessons/lessons.component';
 import { AboutComponent } from './about/about.component';
+import {AgGridModule} from "ag-grid-angular";
+
 
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
@@ -24,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     FormsModule,
     NgbModule,
+      AgGridModule
   ],
   providers: [],
   bootstrap: [AppComponent]
