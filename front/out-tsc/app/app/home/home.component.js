@@ -52,40 +52,73 @@ let HomeComponent = exports.HomeComponent = (() => {
     var HomeComponent = _classThis = class {
         constructor(learningPackageService) {
             this.learningPackageService = learningPackageService;
-            this.title = 'angular-website';
             this.learningPackages = [];
-            this.userAnswer = '';
             this.showCorrectAnswer = false;
-        }
-        addNewLearningPackage(packageTitle) {
-            const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
-            this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
-                console.log('Package added:', data);
-                this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
-            }, error => console.error('Error adding package:', error));
         }
         getPackageWithRandomQuestion(id) {
             this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
-                if (packageData && packageData.questions) {
-                    const question = this.selectRandomQuestion(packageData.questions);
-                    this.randomQuestion = question;
-                    this.correctAnswer = packageData.questions[question];
-                    this.showCorrectAnswer = false; // Cache la réponse correcte initialement
+                if (packageData && packageData.questions) { // si il existe et a des questions
+                    const selectedQuestion = this.selectRandomQuestion(packageData.questions); //on selectionne une q aleatoire
+                    if (selectedQuestion) {
+                        this.randomQuestion = selectedQuestion.question; //enonce
+                        this.correctAnswer = selectedQuestion.answer; // reponse
+                        this.showCorrectAnswer = false; //n affiche pas la reponse par defaut
+                        this.selectedQuestionIndex = packageData.questions.indexOf(selectedQuestion); // get the index
+                    }
+                    else {
+                        this.randomQuestion = null;
+                    }
                 }
                 else {
                     this.randomQuestion = null;
                 }
             });
         }
+        selectRandomQuestion(questions) {
+            const weightedQuestions = questions.map(question => {
+                switch (question.userKnowledgeLevel) {
+                    case 'low':
+                        return Array(3).fill(question); // apparait 3x dans le tableau
+                    case 'medium':
+                        return Array(2).fill(question); // apparait 2x
+                    case 'high':
+                        return Array(1).fill(question); // apparait une seul fois
+                }
+            }).reduce((acc, val) => acc.concat(val), []); // applatit le tableau en un seul
+            console.log(weightedQuestions);
+            if (weightedQuestions.length === 0)
+                return null;
+            const randomIndex = Math.floor(Math.random() * weightedQuestions.length); //selectionne aleatoirement dans le tableau
+            return weightedQuestions[randomIndex]; // retourne la question
+        }
         validateAnswer() {
             this.showCorrectAnswer = true; // Affiche la réponse correcte
         }
-        selectRandomQuestion(questions) {
-            const questionKeys = Object.keys(questions);
-            if (questionKeys.length === 0)
-                return null;
-            const randomKey = questionKeys[Math.floor(Math.random() * questionKeys.length)];
-            return randomKey;
+        updateUserKnowledgeLevel(questionIndex, knowledgeLevel) {
+            this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(response => {
+                console.log('Knowledge level updated:', response);
+                //save question to go back to previous
+                this.previousRandomQuestion = this.randomQuestion;
+                this.previousSelectedPackageId = this.selectedPackageId;
+                this.previousCorrectAnswer = this.correctAnswer;
+                this.previousSelectedQuestionIndex = this.selectedQuestionIndex;
+                this.getPackageWithRandomQuestion(this.selectedPackageId);
+            }, error => {
+                console.error('Error updating knowledge level:', error);
+            });
+        }
+        previousQuestion() {
+            this.randomQuestion = this.previousRandomQuestion;
+            this.selectedPackageId = this.previousSelectedPackageId;
+            this.correctAnswer = this.previousCorrectAnswer;
+            this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
+            this.showCorrectAnswer = true; //permet d'afficher directement la réponse de la dernière question
+        }
+        ngOnInit() {
+            this.learningPackageService.getLearningPackages().subscribe(data => {
+                console.log(data);
+                this.learningPackages = data;
+            });
         }
     };
     __setFunctionName(_classThis, "HomeComponent");

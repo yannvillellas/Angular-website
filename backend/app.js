@@ -12,17 +12,44 @@ function newId() {
 let learningPackages = [
     {
         id: newId(),
-        title: 'Learn test12',
+        title: 'Learn TypeScript',
         description: 'A comprehensive guide to learning TypeScript',
         category: 'Programming',
         targetAudience: 'Developers',
-        difficultyLevel: 3,
-        questions: {
-            'What is TypeScript?': 'A programming language',
-            'What is the command to compile a TypeScript file?': 'tsc',
-            // Plus de paires question-réponse...
-        }
+        questions: [
+            {
+                question: 'What is TypeScript?',
+                answer: 'A programming language that is a superset of JavaScript',
+                userKnowledgeLevel: 'medium'
+            },
+            {
+                question: 'What is the command to compile a TypeScript file?',
+                answer: 'tsc',
+                userKnowledgeLevel: 'low'
+            }
+            // Plus de questions...
+        ]
     },
+    {
+        id: newId(),
+        title: 'Learn Angular',
+        description: 'Learn the basics and advanced concepts of Angular',
+        category: 'Web Development',
+        targetAudience: 'Frontend Developers',
+        questions: [
+            {
+                question: 'What is Angular?',
+                answer: 'A platform and framework for building single-page client applications using HTML and TypeScript',
+                userKnowledgeLevel: 'high',
+            },
+            {
+                question: 'What command creates a new Angular component?',
+                answer: 'ng generate component',
+                userKnowledgeLevel: 'medium',
+            }
+            // Plus de questions...
+        ]
+    }
 ];
 // Route for "/api/liveness"
 app.get('/api/liveness', (req, res) => {
@@ -64,6 +91,27 @@ app.delete('/api/learning-package/:id', (req, res) => {
     else {
         res.status(404).send(`Learning package not found for id: ${id}`);
         console.log('Package not found');
+    }
+});
+app.put('/api/learning-package/:packageId/question/:questionIndex', (req, res) => {
+    const packageId = parseInt(req.params.packageId);
+    const questionIndex = parseInt(req.params.questionIndex);
+    const newKnowledgeLevel = req.body.userKnowledgeLevel;
+    console.log(packageId);
+    console.log(questionIndex);
+    console.log(newKnowledgeLevel);
+    const packageFound = learningPackages.find(pkg => pkg.id === packageId);
+    if (!packageFound) {
+        return res.status(404).send(`Learning package not found for id: ${packageId}`);
+    }
+    if (questionIndex >= 0 && questionIndex < packageFound.questions.length) {
+        console.log(packageFound.questions[questionIndex].userKnowledgeLevel);
+        packageFound.questions[questionIndex].userKnowledgeLevel = newKnowledgeLevel;
+        console.log(packageFound.questions[questionIndex].userKnowledgeLevel);
+        res.status(200).send(`Updated question at index ${questionIndex} in package ${packageId} to knowledge level ${newKnowledgeLevel}`);
+    }
+    else {
+        res.status(404).send(`Question not found at index ${questionIndex} in package ${packageId}`);
     }
 });
 // Start the Express server
