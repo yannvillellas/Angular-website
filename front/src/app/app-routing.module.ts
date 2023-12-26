@@ -11,8 +11,7 @@ const routes: Routes = [
   { path: "about", component: AboutComponent },
   { path: "lessons", component: LessonsComponent },
   { path: "lessons/:id", component: QuestionsComponent},
-  { path: "not-found", component: NotFoundComponent },
-  { path: "**", redirectTo: "not-found" } // Redirect all other routes to the 404 page
+  { path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({
