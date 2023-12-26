@@ -31,4 +31,7 @@ export class LearningPackageService {
         return this.http.put(`${this.apiUrl}/${packageId}/question/${questionIndex}`, body,{ responseType: 'text' });
     }
 
+    packageExists(packageId: number): boolean {
+        return this.http.get(`${this.apiUrl}/${packageId}`) != null;
+    }
 }
