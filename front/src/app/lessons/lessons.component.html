@@ -15,9 +15,9 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item" (click)="deletePackage(package.id)">Delete</button>
-                            <a class="dropdown-item" href="#">Add Item</a>
+                            <button class="dropdown-item text-primary" [routerLink]="['/lessons', package.id]">Edit questions</button> <!-- todo [routerLink]="['/lessons', package.title]" -->
                             <a class="dropdown-item" href="#">Rename</a>
+                            <button class="dropdown-item text-danger" (click)="deletePackage(package.id)">Delete</button>
                         </div>
                     </div>
                 </div>
