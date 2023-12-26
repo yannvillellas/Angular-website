@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
   { path: "lessons", component: LessonsComponent },
-  { path: "not-found", component: NotFoundComponent }, // Add this line
+  { path: "lessons/:id", component: LessonsComponent},
+  { path: "not-found", component: NotFoundComponent },
   { path: "**", redirectTo: "not-found" } // Redirect all other routes to the 404 page
 ];
 
