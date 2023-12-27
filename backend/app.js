@@ -9,6 +9,7 @@ let test = 4;
 function newId() {
     return idGenerator++;
 }
+//create default learning packages
 let learningPackages = [
     {
         id: newId(),
@@ -27,7 +28,6 @@ let learningPackages = [
                 answer: 'tsc',
                 userKnowledgeLevel: 'low'
             }
-            // Plus de questions...
         ]
     },
     {
@@ -47,7 +47,6 @@ let learningPackages = [
                 answer: 'ng generate component',
                 userKnowledgeLevel: 'medium',
             }
-            // Plus de questions...
         ]
     }
 ];
@@ -78,6 +77,7 @@ app.post('/api/learning-package', (req, res) => {
     learningPackages.push(item);
     res.send(item);
 });
+//delete a learning package
 app.delete('/api/learning-package/:id', (req, res) => {
     const id = parseInt(req.params.id);
     console.log(`Attempting to delete package with ID: ${id}`);
@@ -93,6 +93,7 @@ app.delete('/api/learning-package/:id', (req, res) => {
         console.log('Package not found');
     }
 });
+// modify User Knowledge level of a question
 app.put('/api/learning-package/:packageId/question/:questionIndex', (req, res) => {
     const packageId = parseInt(req.params.packageId);
     const questionIndex = parseInt(req.params.questionIndex);
@@ -113,6 +114,25 @@ app.put('/api/learning-package/:packageId/question/:questionIndex', (req, res) =
     else {
         res.status(404).send(`Question not found at index ${questionIndex} in package ${packageId}`);
     }
+});
+//update the list of question or the package title
+app.put('/api/learning-package/:packageId', (req, res) => {
+    const packageId = parseInt(req.params.packageId);
+    const updatedTitle = req.body.title;
+    const updatedQuestions = req.body.questions;
+    const packageIndex = learningPackages.findIndex(pkg => pkg.id === packageId);
+    if (packageIndex === -1) {
+        return res.status(404).send(`Learning package not found for id: ${packageId}`);
+    }
+    // met a jour le titre si fourni dans le body
+    if (updatedTitle) {
+        learningPackages[packageIndex].title = updatedTitle;
+    }
+    // met a jour les questions si fournies dans le body
+    if (updatedQuestions) {
+        learningPackages[packageIndex].questions = updatedQuestions;
+    }
+    res.status(200).send(`Package ${packageId} updated successfully`);
 });
 // Start the Express server
 app.listen(port, () => {

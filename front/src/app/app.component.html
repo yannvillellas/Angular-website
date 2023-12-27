@@ -8,6 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <a class="nav-link" [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Home</a>
                 <a class="nav-link" [routerLink]="['/lessons']" [routerLinkActive]="['active']">Lessons</a>
                 <a class="nav-link" [routerLink]="['/about']" [routerLinkActive]="['active']">About</a>
             </ul>

@@ -38,65 +38,76 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LessonsComponent = void 0;
+exports.QuestionsComponent = void 0;
 const core_1 = require("@angular/core");
-let LessonsComponent = exports.LessonsComponent = (() => {
+let QuestionsComponent = exports.QuestionsComponent = (() => {
     let _classDecorators = [(0, core_1.Component)({
-            selector: 'app-lessons',
-            templateUrl: './lessons.component.html',
-            styleUrls: ['./lessons.component.css']
+            selector: 'app-questions',
+            templateUrl: './questions.component.html',
+            styleUrls: ['./questions.component.css']
         })];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    var LessonsComponent = _classThis = class {
-        constructor(learningPackageService) {
+    var QuestionsComponent = _classThis = class {
+        constructor(route, router, learningPackageService) {
+            this.route = route;
+            this.router = router;
             this.learningPackageService = learningPackageService;
-            this.title = 'angular-website';
-            this.learningPackages = [];
-            this.editingStatus = {}; //use to know if we modify a package title or not
+            this.updateSuccess = false;
         }
-        addNewLearningPackage(packageTitle) {
-            const newPackage = { title: packageTitle }; // create package with title
-            this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
-                console.log('Package added:', data);
-                this.learningPackages.push(data); // add new package
-                this.packageTitle = ''; // reset user input
-            }, error => console.error('Error adding package:', error));
-        }
-        deletePackage(id) {
-            this.learningPackageService.deleteLearningPackage(id).subscribe(() => {
-                // get the new package list
-                this.learningPackageService.getLearningPackages().subscribe(data => {
-                    console.log(data);
-                    this.learningPackages = data;
-                });
-                this.learningPackages = this.learningPackages.filter(pkg => pkg.id !== id);
+        //update the list of questions/answers
+        updateQuestions() {
+            this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions) //envoie au backend la nouvelle liste de questions
+                .subscribe(response => {
+                console.log('Questions updated:', response);
+                this.updateSuccess = true;
             }, error => {
-                console.error('Error deleting package:', error);
+                console.error('Error updating questions:', error);
             });
         }
-        enableEditing(id) {
-            this.editingStatus[id] = true;
+        // add a new question to the list
+        addNewQuestion() {
+            const newQuestion = {
+                question: '',
+                answer: '',
+                userKnowledgeLevel: 'low' //new question had bad knowledge
+            };
+            this.learningPackage.questions.push(newQuestion);
         }
-        updatePackageName(id, title) {
-            this.editingStatus[id] = false;
-            this.learningPackageService.updateLearningPackageName(id, title)
-                .subscribe();
+        // delete a question
+        deleteQuestion(index) {
+            this.learningPackage.questions.splice(index, 1);
         }
         ngOnInit() {
-            this.learningPackageService.getLearningPackages().subscribe(data => {
-                console.log(data);
-                this.learningPackages = data;
+            // Subscribe to the route parameter changes
+            this.route.params.subscribe(params => {
+                this.packageId = +params['id']; // Convert id to a number
+                // Check if the packageId exists in the learningPackages array
+                if (!this.learningPackageService.packageExists(this.packageId)) {
+                    // If the packageId does not exist redirect to a default page
+                    this.router.navigate(['/not-found'], { skipLocationChange: true }); // Redirect to a not-found page
+                }
+                else {
+                    // If the packageId exists, fetch the learning package
+                    this.learningPackageService.getLearningPackageById(this.packageId).subscribe(data => {
+                        console.log(data);
+                        this.learningPackage = data; //init the learning package choose by the user
+                    }, error => {
+                        console.error('Error fetching package:', error);
+                        // redirect to a default page
+                        this.router.navigate(['/not-found'], { skipLocationChange: true });
+                    });
+                }
             });
         }
     };
-    __setFunctionName(_classThis, "LessonsComponent");
+    __setFunctionName(_classThis, "QuestionsComponent");
     (() => {
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name }, null, _classExtraInitializers);
-        LessonsComponent = _classThis = _classDescriptor.value;
+        QuestionsComponent = _classThis = _classDescriptor.value;
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return LessonsComponent = _classThis;
+    return QuestionsComponent = _classThis;
 })();
-//# sourceMappingURL=lessons.component.js.map
+//# sourceMappingURL=questions.component.js.map

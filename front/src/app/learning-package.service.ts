@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {LearningPackage} from "../app/learning_package.model";
+import { Question } from '../app/question.model';
+
 
 @Injectable({
     providedIn: 'root'
@@ -31,4 +33,17 @@ export class LearningPackageService {
         return this.http.put(`${this.apiUrl}/${packageId}/question/${questionIndex}`, body,{ responseType: 'text' });
     }
 
+    updateLearningPackageQuestions(packageId: number, questions: Question[]): Observable<any> {
+        const body = { questions };
+        return this.http.put(`${this.apiUrl}/${packageId}`, body,{ responseType: 'text' });
+    }
+
+    updateLearningPackageName(packageId: number, newName: string): Observable<any> {
+        const body = { title: newName };
+        return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
+    }
+
+    packageExists(packageId: number): boolean {
+        return this.http.get(`${this.apiUrl}/${packageId}`) != null;
+    }
 }

@@ -41,13 +41,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppRoutingModule = void 0;
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
-const lessons_component_1 = require("./lessons/lessons.component");
-const about_component_1 = require("./about/about.component");
 const home_component_1 = require("./home/home.component");
+const about_component_1 = require("./about/about.component");
+const lessons_component_1 = require("./lessons/lessons.component");
+const questions_component_1 = require("./questions/questions.component");
+const not_found_component_1 = require("./not-found/not-found.component");
 const routes = [
     { path: "", component: home_component_1.HomeComponent },
+    { path: "about", component: about_component_1.AboutComponent },
     { path: "lessons", component: lessons_component_1.LessonsComponent },
-    { path: "about", component: about_component_1.AboutComponent }
+    { path: "lessons/:id", component: questions_component_1.QuestionsComponent },
+    { path: "**", component: not_found_component_1.NotFoundComponent }
 ];
 let AppRoutingModule = exports.AppRoutingModule = (() => {
     let _classDecorators = [(0, core_1.NgModule)({

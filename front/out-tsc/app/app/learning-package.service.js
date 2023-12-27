@@ -68,6 +68,17 @@ let LearningPackageService = exports.LearningPackageService = (() => {
             const body = { userKnowledgeLevel: knowledgeLevel };
             return this.http.put(`${this.apiUrl}/${packageId}/question/${questionIndex}`, body, { responseType: 'text' });
         }
+        updateLearningPackageQuestions(packageId, questions) {
+            const body = { questions };
+            return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
+        }
+        updateLearningPackageName(packageId, newName) {
+            const body = { title: newName };
+            return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
+        }
+        packageExists(packageId) {
+            return this.http.get(`${this.apiUrl}/${packageId}`) != null;
+        }
     };
     __setFunctionName(_classThis, "LearningPackageService");
     (() => {
@@ -77,4 +88,5 @@ let LearningPackageService = exports.LearningPackageService = (() => {
     })();
     return LearningPackageService = _classThis;
 })();
+return this.http.get(`${this.apiUrl}/${packageId}`) != null;
 //# sourceMappingURL=learning-package.service.js.map
