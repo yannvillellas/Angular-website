@@ -1,44 +1,36 @@
-<div class="bg-image d-flex justify-content-center align-items-center"
-     style="
-        background-image: url('https://www.codeur.com/tuto/wp-content/uploads/2022/01/pexels-roberto-nickson-2559941-1.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        height: calc(100vh - 66px);">
-    <div class="container bg-light rounded-5 p-5">
-        <ul class="list-unstyled">
-            <li *ngFor="let package of learningPackages" class="mb-1">
-                <div class="d-flex justify-content-between align-items-center p-2 border rounded-2">
-                    <div *ngIf="!editingStatus[package.id]">
-                        <span>{{ package.title }}</span>
-                    </div>
-                    <div *ngIf="editingStatus[package.id]">
-                        <input class="form-control" type="text" [(ngModel)]="package.title">
-                        <button class="btn btn-success" (click)="updatePackageName(package.id, package.title)">Save</button>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                            Actions
-                        </button>
-                        <div class="dropdown-menu">
-                            <button class="dropdown-item text-primary" [routerLink]="['/lessons', package.id]">Edit questions</button>
-                            <button class="dropdown-item" (click)="enableEditing(package.id)">Rename</button>
-                            <button class="dropdown-item text-danger" (click)="deletePackage(package.id)">Delete</button>
-                        </div>
+<div class="container rounded-5 p-5">
+    <ul class="list-unstyled">
+        <li *ngFor="let package of learningPackages" class="mb-1">
+            <div class="d-flex justify-content-between align-items-center p-2 border rounded-2">
+                <div *ngIf="!editingStatus[package.id]">
+                    <span>{{ package.title }}</span>
+                </div>
+                <div *ngIf="editingStatus[package.id]">
+                    <input class="form-control" type="text" [(ngModel)]="package.title">
+                    <button class="btn btn-success" (click)="updatePackageName(package.id, package.title)">Save</button>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item text-primary" [routerLink]="['/lessons', package.id]">Edit questions</button>
+                        <button class="dropdown-item" (click)="enableEditing(package.id)">Rename</button>
+                        <button class="dropdown-item text-danger" (click)="deletePackage(package.id)">Delete</button>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </li>
+    </ul>
 
 
-        <!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
-        <form class="d-flex" (ngSubmit)="addNewLearningPackage(packageTitle)">
-            <div class="form-group flex-grow-1 me-1">
-                <input class="form-control rounded-2" type="text" placeholder="Enter your package name" [(ngModel)]="packageTitle" name="packageTitle" required>
-            </div>
-            <div class="form-group ms-1">
-                <button class="btn btn-primary rounded-2" type="submit">Add Package</button>
-            </div>
-        </form>
-    </div>
+    <!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
+    <form class="d-flex" (ngSubmit)="addNewLearningPackage(packageTitle)">
+        <div class="form-group flex-grow-1 me-1">
+            <input class="form-control rounded-2" type="text" placeholder="Enter your package name" [(ngModel)]="packageTitle" name="packageTitle" required>
+        </div>
+        <div class="form-group ms-1">
+            <button class="btn btn-primary rounded-2" type="submit">Add Package</button>
+        </div>
+    </form>
 </div>

@@ -27,6 +27,7 @@ export class QuestionsComponent implements OnInit {
             response => {
               console.log('Questions updated:', response);
               this.updateSuccess = true;
+              this.router.navigate(['/lessons']);
             },
             error => {
               console.error('Error updating questions:', error);
@@ -47,6 +48,11 @@ export class QuestionsComponent implements OnInit {
     // delete a question
     deleteQuestion(index: number): void {
         this.learningPackage.questions.splice(index, 1);
+    }
+
+    goBackToLessons() {
+        // Navigate to the lessons page
+        this.router.navigate(['/lessons']);
     }
 
     ngOnInit(): void {
