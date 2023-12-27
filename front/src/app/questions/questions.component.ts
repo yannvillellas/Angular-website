@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LearningPackageService } from '../learning-package.service';
 import {LearningPackage} from "../learning_package.model";
+import {Question} from "../question.model";
 
 @Component({
   selector: 'app-questions',
@@ -11,7 +12,7 @@ import {LearningPackage} from "../learning_package.model";
 export class QuestionsComponent implements OnInit {
   packageId: number;
   learningPackage: LearningPackage;
-
+  updateSuccess: boolean = false;
 
   constructor(
       private route: ActivatedRoute,
@@ -20,11 +21,11 @@ export class QuestionsComponent implements OnInit {
   ) {}
 
   updateQuestions(): void {
-    // Logique pour envoyer les questions mises à jour au backend
-    this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions)
+    this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions) //envoie au backend la nouvelle liste de questions
         .subscribe(
             response => {
               console.log('Questions updated:', response);
+              this.updateSuccess = true;
             },
             error => {
               console.error('Error updating questions:', error);
@@ -32,7 +33,20 @@ export class QuestionsComponent implements OnInit {
         );
   }
 
-  ngOnInit(): void {
+    addNewQuestion(): void {
+        const newQuestion: Question = {
+            question: '',
+            answer: '',
+            userKnowledgeLevel: 'low' //new question had bad knowledge
+        };
+        this.learningPackage.questions.push(newQuestion);
+    }
+
+    deleteQuestion(index: number): void {
+        this.learningPackage.questions.splice(index, 1);
+    }
+
+    ngOnInit(): void {
     // Subscribe to the route parameter changes
     this.route.params.subscribe(params => {
       this.packageId = +params['id']; // Convert id to a number
@@ -46,7 +60,7 @@ export class QuestionsComponent implements OnInit {
         this.learningPackageService.getLearningPackageById(this.packageId).subscribe(
             data => {
               console.log(data);
-              this.learningPackage = data;
+              this.learningPackage = data; //init the learning package choose by the user
             },
             error => {
               console.error('Error fetching package:', error);

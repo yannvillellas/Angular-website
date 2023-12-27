@@ -54,15 +54,27 @@ let QuestionsComponent = exports.QuestionsComponent = (() => {
             this.route = route;
             this.router = router;
             this.learningPackageService = learningPackageService;
+            this.updateSuccess = false;
         }
         updateQuestions() {
-            // Logique pour envoyer les questions mises à jour au backend
-            this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions)
+            this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions) //envoie au backend la nouvelle liste de questions
                 .subscribe(response => {
                 console.log('Questions updated:', response);
+                this.updateSuccess = true;
             }, error => {
                 console.error('Error updating questions:', error);
             });
+        }
+        addNewQuestion() {
+            const newQuestion = {
+                question: '',
+                answer: '',
+                userKnowledgeLevel: 'low' //new question had bad knowledge
+            };
+            this.learningPackage.questions.push(newQuestion);
+        }
+        deleteQuestion(index) {
+            this.learningPackage.questions.splice(index, 1);
         }
         ngOnInit() {
             // Subscribe to the route parameter changes
@@ -77,7 +89,7 @@ let QuestionsComponent = exports.QuestionsComponent = (() => {
                     // If the packageId exists, fetch the learning package
                     this.learningPackageService.getLearningPackageById(this.packageId).subscribe(data => {
                         console.log(data);
-                        this.learningPackage = data;
+                        this.learningPackage = data; //init the learning package choose by the user
                     }, error => {
                         console.error('Error fetching package:', error);
                         // redirect to a default page
