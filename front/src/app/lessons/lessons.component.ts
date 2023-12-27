@@ -18,7 +18,7 @@ export class LessonsComponent implements OnInit{
   constructor(private learningPackageService: LearningPackageService) { }
 
   addNewLearningPackage(packageTitle: string): void {
-    const newPackage = { title: packageTitle }; // create package with title
+    const newPackage = { title: packageTitle, questions: [] }; // create package with title and empty question list
     this.learningPackageService.addLearningPackage(newPackage).subscribe(
         data => {
           console.log('Package added:', data);
