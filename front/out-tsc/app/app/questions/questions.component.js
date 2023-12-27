@@ -38,37 +38,61 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
     return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppRoutingModule = void 0;
+exports.QuestionsComponent = void 0;
 const core_1 = require("@angular/core");
-const router_1 = require("@angular/router");
-const home_component_1 = require("./home/home.component");
-const about_component_1 = require("./about/about.component");
-const lessons_component_1 = require("./lessons/lessons.component");
-const questions_component_1 = require("./questions/questions.component");
-const not_found_component_1 = require("./not-found/not-found.component");
-const routes = [
-    { path: "", component: home_component_1.HomeComponent },
-    { path: "about", component: about_component_1.AboutComponent },
-    { path: "lessons", component: lessons_component_1.LessonsComponent },
-    { path: "lessons/:id", component: questions_component_1.QuestionsComponent },
-    { path: "**", component: not_found_component_1.NotFoundComponent }
-];
-let AppRoutingModule = exports.AppRoutingModule = (() => {
-    let _classDecorators = [(0, core_1.NgModule)({
-            imports: [router_1.RouterModule.forRoot(routes)],
-            exports: [router_1.RouterModule]
+let QuestionsComponent = exports.QuestionsComponent = (() => {
+    let _classDecorators = [(0, core_1.Component)({
+            selector: 'app-questions',
+            templateUrl: './questions.component.html',
+            styleUrls: ['./questions.component.css']
         })];
     let _classDescriptor;
     let _classExtraInitializers = [];
     let _classThis;
-    var AppRoutingModule = _classThis = class {
+    var QuestionsComponent = _classThis = class {
+        constructor(route, router, learningPackageService) {
+            this.route = route;
+            this.router = router;
+            this.learningPackageService = learningPackageService;
+        }
+        updateQuestions() {
+            // Logique pour envoyer les questions mises à jour au backend
+            this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions)
+                .subscribe(response => {
+                console.log('Questions updated:', response);
+            }, error => {
+                console.error('Error updating questions:', error);
+            });
+        }
+        ngOnInit() {
+            // Subscribe to the route parameter changes
+            this.route.params.subscribe(params => {
+                this.packageId = +params['id']; // Convert id to a number
+                // Check if the packageId exists in the learningPackages array
+                if (!this.learningPackageService.packageExists(this.packageId)) {
+                    // If the packageId does not exist redirect to a default page
+                    this.router.navigate(['/not-found'], { skipLocationChange: true }); // Redirect to a not-found page
+                }
+                else {
+                    // If the packageId exists, fetch the learning package
+                    this.learningPackageService.getLearningPackageById(this.packageId).subscribe(data => {
+                        console.log(data);
+                        this.learningPackage = data;
+                    }, error => {
+                        console.error('Error fetching package:', error);
+                        // redirect to a default page
+                        this.router.navigate(['/not-found'], { skipLocationChange: true });
+                    });
+                }
+            });
+        }
     };
-    __setFunctionName(_classThis, "AppRoutingModule");
+    __setFunctionName(_classThis, "QuestionsComponent");
     (() => {
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name }, null, _classExtraInitializers);
-        AppRoutingModule = _classThis = _classDescriptor.value;
+        QuestionsComponent = _classThis = _classDescriptor.value;
         __runInitializers(_classThis, _classExtraInitializers);
     })();
-    return AppRoutingModule = _classThis;
+    return QuestionsComponent = _classThis;
 })();
-//# sourceMappingURL=app-routing.module.js.map
+//# sourceMappingURL=questions.component.js.map

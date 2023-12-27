@@ -114,6 +114,17 @@ app.put('/api/learning-package/:packageId/question/:questionIndex', (req, res) =
         res.status(404).send(`Question not found at index ${questionIndex} in package ${packageId}`);
     }
 });
+app.put('/api/learning-package/:packageId', (req, res) => {
+    const packageId = parseInt(req.params.packageId);
+    const updatedQuestions = req.body.questions;
+    const packageIndex = learningPackages.findIndex(pkg => pkg.id === packageId);
+    if (packageIndex === -1) {
+        return res.status(404).send(`Learning package not found for id: ${packageId}`);
+    }
+    // Mettre à jour les questions du package
+    learningPackages[packageIndex].questions = updatedQuestions;
+    res.status(200).send(`Questions updated for package ${packageId}`);
+});
 // Start the Express server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

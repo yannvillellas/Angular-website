@@ -1,1 +1,17 @@
-<p>questions works!</p>
+<div class="container bg-light rounded-5 p-5">
+    <h3>{{ learningPackage.title }}</h3>
+    <ul class="list-unstyled">
+        <li *ngFor="let question of learningPackage.questions; let i = index" class="mb-3">
+            <div class="form-group">
+                <label for="question-{{i}}">Question {{i + 1}}</label>
+                <textarea id="question-{{i}}" class="form-control" [(ngModel)]="question.question" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="answer-{{i}}">Answer</label>
+                <input id="answer-{{i}}" class="form-control" type="text" [(ngModel)]="question.answer">
+            </div>
+            <!-- Add more fields as needed -->
+        </li>
+    </ul>
+    <button class="btn btn-primary" (click)="updateQuestions()">Save Changes</button>
+</div>

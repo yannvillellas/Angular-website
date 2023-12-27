@@ -54,6 +54,8 @@ let HomeComponent = exports.HomeComponent = (() => {
             this.learningPackageService = learningPackageService;
             this.learningPackages = [];
             this.showCorrectAnswer = false;
+            this.showAnswerButton = true;
+            this.showPreviousButton = false;
         }
         getPackageWithRandomQuestion(id) {
             this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
@@ -73,6 +75,9 @@ let HomeComponent = exports.HomeComponent = (() => {
                     this.randomQuestion = null;
                 }
             });
+            // reset les boutons
+            this.showAnswerButton = true;
+            this.showPreviousButton = false;
         }
         selectRandomQuestion(questions) {
             const weightedQuestions = questions.map(question => {
@@ -93,6 +98,8 @@ let HomeComponent = exports.HomeComponent = (() => {
         }
         validateAnswer() {
             this.showCorrectAnswer = true; // Affiche la réponse correcte
+            this.showAnswerButton = false;
+            this.showPreviousButton = false;
         }
         updateUserKnowledgeLevel(questionIndex, knowledgeLevel) {
             this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(response => {
@@ -103,6 +110,7 @@ let HomeComponent = exports.HomeComponent = (() => {
                 this.previousCorrectAnswer = this.correctAnswer;
                 this.previousSelectedQuestionIndex = this.selectedQuestionIndex;
                 this.getPackageWithRandomQuestion(this.selectedPackageId);
+                this.showPreviousButton = true;
             }, error => {
                 console.error('Error updating knowledge level:', error);
             });
@@ -112,7 +120,10 @@ let HomeComponent = exports.HomeComponent = (() => {
             this.selectedPackageId = this.previousSelectedPackageId;
             this.correctAnswer = this.previousCorrectAnswer;
             this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
-            this.showCorrectAnswer = true; //permet d'afficher directement la réponse de la dernière question
+            this.showCorrectAnswer = true; // permet d'afficher directement la réponse de la dernière question
+            // reset les boutons
+            this.showAnswerButton = false;
+            this.showPreviousButton = false;
         }
         ngOnInit() {
             this.learningPackageService.getLearningPackages().subscribe(data => {

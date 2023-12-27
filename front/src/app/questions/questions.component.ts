@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LearningPackageService } from '../learning-package.service';
+import {LearningPackage} from "../learning_package.model";
 
 @Component({
   selector: 'app-questions',
@@ -9,12 +10,27 @@ import { LearningPackageService } from '../learning-package.service';
 })
 export class QuestionsComponent implements OnInit {
   packageId: number;
+  learningPackage: LearningPackage;
+
 
   constructor(
       private route: ActivatedRoute,
       private router: Router,
       private learningPackageService: LearningPackageService
   ) {}
+
+  updateQuestions(): void {
+    // Logique pour envoyer les questions mises à jour au backend
+    this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions)
+        .subscribe(
+            response => {
+              console.log('Questions updated:', response);
+            },
+            error => {
+              console.error('Error updating questions:', error);
+            }
+        );
+  }
 
   ngOnInit(): void {
     // Subscribe to the route parameter changes
@@ -30,7 +46,7 @@ export class QuestionsComponent implements OnInit {
         this.learningPackageService.getLearningPackageById(this.packageId).subscribe(
             data => {
               console.log(data);
-              // Handle the data as needed
+              this.learningPackage = data;
             },
             error => {
               console.error('Error fetching package:', error);
