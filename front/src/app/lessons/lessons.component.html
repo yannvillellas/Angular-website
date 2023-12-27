@@ -9,20 +9,28 @@
         <ul class="list-unstyled">
             <li *ngFor="let package of learningPackages" class="mb-1">
                 <div class="d-flex justify-content-between align-items-center p-2 border rounded-2">
-                    <span>{{ package.title }}</span>
+                    <div *ngIf="!editingStatus[package.id]">
+                        <span>{{ package.title }}</span>
+                    </div>
+                    <div *ngIf="editingStatus[package.id]">
+                        <input class="form-control" type="text" [(ngModel)]="package.title">
+                        <button class="btn btn-success" (click)="updatePackageName(package.id, package.title)">Save</button>
+                    </div>
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                             Actions
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item text-primary" [routerLink]="['/lessons', package.id]">Edit questions</button> <!-- todo [routerLink]="['/lessons', package.title]" -->
-                            <a class="dropdown-item" href="#">Rename</a>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item text-primary" [routerLink]="['/lessons', package.id]">Edit questions</button>
+                            <button class="dropdown-item" (click)="enableEditing(package.id)">Rename</button>
                             <button class="dropdown-item text-danger" (click)="deletePackage(package.id)">Delete</button>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
+
+
         <!-- Ajouter un formulaire pour soumettre de nouveaux learning packages -->
         <form class="d-flex" (ngSubmit)="addNewLearningPackage(packageTitle)">
             <div class="form-group flex-grow-1 me-1">

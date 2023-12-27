@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit{
 
   constructor(private learningPackageService: LearningPackageService) { }
 
+  //get a random question from a package
   getPackageWithRandomQuestion(id: number): void {
     this.learningPackageService.getLearningPackageById(id).subscribe(packageData => { //recupere un learning package depuis son id
       if (packageData && packageData.questions) { // si il existe et a des questions
@@ -47,32 +48,34 @@ export class HomeComponent implements OnInit{
     this.showPreviousButton = false;
   }
 
+  //select random question using the user knowledge
   selectRandomQuestion(questions: Question[]): Question {
     const weightedQuestions = questions.map(question => {
       switch (question.userKnowledgeLevel) {
         case 'low':
-          return Array(3).fill(question); // apparait 3x dans le tableau
+          return Array(3).fill(question); // 3x more chances
         case 'medium':
-          return Array(2).fill(question); // apparait 2x
+          return Array(2).fill(question); // 2x more chances
         case 'high':
-          return Array(1).fill(question); // apparait une seul fois
+          return Array(1).fill(question);
       }
-    }).reduce((acc, val) => acc.concat(val), []); // applatit le tableau en un seul
+    }).reduce((acc, val) => acc.concat(val), []); // get all in one table
 
     console.log(weightedQuestions);
     if (weightedQuestions.length === 0) return null;
-    const randomIndex = Math.floor(Math.random() * weightedQuestions.length); //selectionne aleatoirement dans le tableau
-    return weightedQuestions[randomIndex]; // retourne la question
+    const randomIndex = Math.floor(Math.random() * weightedQuestions.length); // get randomly from the table
+    return weightedQuestions[randomIndex]; // return the question
   }
 
   validateAnswer(): void {
-    this.showCorrectAnswer = true; // Affiche la réponse correcte
+    this.showCorrectAnswer = true; // show the answer
 
     this.showAnswerButton = false;
     this.showPreviousButton = false;
   }
 
 
+  //update the user knowledge of the question
   updateUserKnowledgeLevel(questionIndex: number, knowledgeLevel: string): void {
     this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(
         response => {
@@ -97,9 +100,9 @@ previousQuestion(): void {
   this.selectedPackageId = this.previousSelectedPackageId;
   this.correctAnswer = this.previousCorrectAnswer;
   this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
-  this.showCorrectAnswer =true; // permet d'afficher directement la réponse de la dernière question
+  this.showCorrectAnswer =true;
 
-  // reset les boutons
+  // reset buttons
   this.showAnswerButton = false;
   this.showPreviousButton = false;
 }

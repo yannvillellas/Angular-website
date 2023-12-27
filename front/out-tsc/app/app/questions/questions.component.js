@@ -56,6 +56,7 @@ let QuestionsComponent = exports.QuestionsComponent = (() => {
             this.learningPackageService = learningPackageService;
             this.updateSuccess = false;
         }
+        //update the list of questions/answers
         updateQuestions() {
             this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions) //envoie au backend la nouvelle liste de questions
                 .subscribe(response => {
@@ -65,6 +66,7 @@ let QuestionsComponent = exports.QuestionsComponent = (() => {
                 console.error('Error updating questions:', error);
             });
         }
+        // add a new question to the list
         addNewQuestion() {
             const newQuestion = {
                 question: '',
@@ -73,6 +75,7 @@ let QuestionsComponent = exports.QuestionsComponent = (() => {
             };
             this.learningPackage.questions.push(newQuestion);
         }
+        // delete a question
         deleteQuestion(index) {
             this.learningPackage.questions.splice(index, 1);
         }

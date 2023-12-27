@@ -72,6 +72,10 @@ let LearningPackageService = exports.LearningPackageService = (() => {
             const body = { questions };
             return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
         }
+        updateLearningPackageName(packageId, newName) {
+            const body = { title: newName };
+            return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
+        }
         packageExists(packageId) {
             return this.http.get(`${this.apiUrl}/${packageId}`) != null;
         }

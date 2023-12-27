@@ -20,6 +20,7 @@ export class QuestionsComponent implements OnInit {
       private learningPackageService: LearningPackageService
   ) {}
 
+    //update the list of questions/answers
   updateQuestions(): void {
     this.learningPackageService.updateLearningPackageQuestions(this.learningPackage.id, this.learningPackage.questions) //envoie au backend la nouvelle liste de questions
         .subscribe(
@@ -33,6 +34,7 @@ export class QuestionsComponent implements OnInit {
         );
   }
 
+  // add a new question to the list
     addNewQuestion(): void {
         const newQuestion: Question = {
             question: '',
@@ -42,6 +44,7 @@ export class QuestionsComponent implements OnInit {
         this.learningPackage.questions.push(newQuestion);
     }
 
+    // delete a question
     deleteQuestion(index: number): void {
         this.learningPackage.questions.splice(index, 1);
     }

@@ -54,18 +54,19 @@ let LessonsComponent = exports.LessonsComponent = (() => {
             this.learningPackageService = learningPackageService;
             this.title = 'angular-website';
             this.learningPackages = [];
+            this.editingStatus = {}; //use to know if we modify a package title or not
         }
         addNewLearningPackage(packageTitle) {
-            const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
+            const newPackage = { title: packageTitle }; // create package with title
             this.learningPackageService.addLearningPackage(newPackage).subscribe(data => {
                 console.log('Package added:', data);
-                this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
-                this.packageTitle = ''; // Réinitialise le champ de saisie
+                this.learningPackages.push(data); // add new package
+                this.packageTitle = ''; // reset user input
             }, error => console.error('Error adding package:', error));
         }
         deletePackage(id) {
             this.learningPackageService.deleteLearningPackage(id).subscribe(() => {
-                // Filtrer le package supprimé de la liste 'learningPackages'
+                // get the new package list
                 this.learningPackageService.getLearningPackages().subscribe(data => {
                     console.log(data);
                     this.learningPackages = data;
@@ -74,6 +75,14 @@ let LessonsComponent = exports.LessonsComponent = (() => {
             }, error => {
                 console.error('Error deleting package:', error);
             });
+        }
+        enableEditing(id) {
+            this.editingStatus[id] = true;
+        }
+        updatePackageName(id, title) {
+            this.editingStatus[id] = false;
+            this.learningPackageService.updateLearningPackageName(id, title)
+                .subscribe();
         }
         ngOnInit() {
             this.learningPackageService.getLearningPackages().subscribe(data => {

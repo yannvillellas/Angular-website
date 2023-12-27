@@ -38,6 +38,10 @@ export class LearningPackageService {
         return this.http.put(`${this.apiUrl}/${packageId}`, body,{ responseType: 'text' });
     }
 
+    updateLearningPackageName(packageId: number, newName: string): Observable<any> {
+        const body = { title: newName };
+        return this.http.put(`${this.apiUrl}/${packageId}`, body, { responseType: 'text' });
+    }
 
     packageExists(packageId: number): boolean {
         return this.http.get(`${this.apiUrl}/${packageId}`) != null;
