@@ -15,40 +15,9 @@
             <button class="btn btn-primary rounded-2" (click)="getPackageWithRandomQuestion(selectedPackageId)">Go with questions</button>
         </div>
     </div>
-<<<<<<< Updated upstream
     <div class="container m-2 bg-light rounded-5 p-5 text-center" *ngIf="randomQuestion">
         <h1>{{ randomQuestion }}</h1>
         <h2 class="text-primary" *ngIf="showCorrectAnswer">{{ correctAnswer }}</h2>
-=======
-    <div class="rounded-2 p-1">
-        <button class="btn btn-primary m-2">BUTTON 1</button>
-        <button class="btn btn-primary m-2">BUTTON 2</button>
-    </div>
-
-</div>
-<div class="content container-fluid" role="main">
-    <ul>
-
-        <li *ngFor="let package of learningPackages">{{ package.title }}</li>
-
-    </ul>
-    <!--Ajouter un formulaire pour soumettre de nouveaux learning packages-->
-    <form (ngSubmit)="addNewLearningPackage(packageTitle)">
-        <input type="text" [(ngModel)]="packageTitle" name="packageTitle" required>
-        <button type="submit">Add Package</button>
-    </form>
-
-
-    <!--Zone de saisie pour l'ID du package-->
-    <input type="number" [(ngModel)]="selectedPackageId" placeholder="Enter Package ID">
-    <button (click)="getPackageWithRandomQuestion(selectedPackageId)">Get Random Question</button>
-
-    <!--Affiche la question aléatoire-->
-    <div *ngIf="randomQuestion">
-        <p><strong>Question:</strong> {{ randomQuestion }}</p>
-        <textarea [(ngModel)]="userAnswer" placeholder="Write your answer here"></textarea>
-        <button (click)="validateAnswer()">Validate My Answer</button>
->>>>>>> Stashed changes
     </div>
     <div class="rounded-2 p-1">
         <button class="btn btn-secondary m-2" (click)="previousQuestion()" *ngIf="randomQuestion && showPreviousButton">Previous answer</button>

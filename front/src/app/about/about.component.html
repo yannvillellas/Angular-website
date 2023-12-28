@@ -15,11 +15,14 @@
 
 </div>
 <div class="container bg-light rounded-5 p-5">
+    <h2>Learning Packages</h2>
     <ag-grid-angular
+
     class="ag-theme-alpine"
-    style="height: 500px;width: 500px;"
-    [rowData]="rowData"
+    style="height: 500px; width: 100%;"
+    [rowData]="rowData$ | async"
     [columnDefs]="colDefs"
+    (gridReady)="onGridReady($event)"
     >
     </ag-grid-angular>
 </div>
