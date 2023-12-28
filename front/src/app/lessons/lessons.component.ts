@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LearningPackageService} from "../learning-package.service";
+import { LearningPackage } from '../learning_package.model';
+
 
 @Component({
   selector: 'app-lessons',
@@ -11,15 +13,17 @@ export class LessonsComponent implements OnInit{
   learningPackages: any=[];
   packageTitle: any;
 
+  editingStatus: { [packageId: number]: boolean } = {}; //use to know if we modify a package title or not
+
   constructor(private learningPackageService: LearningPackageService) { }
 
   addNewLearningPackage(packageTitle: string): void {
-    const newPackage = { title: packageTitle }; // Créez l'objet package avec le titre
+    const newPackage = { title: packageTitle, questions: [] }; // create package with title and empty question list
     this.learningPackageService.addLearningPackage(newPackage).subscribe(
         data => {
           console.log('Package added:', data);
-          this.learningPackages.push(data); // Ajoutez le nouveau package à la liste
-          this.packageTitle = ''; // Réinitialise le champ de saisie
+          this.learningPackages.push(data); // add new package
+          this.packageTitle = ''; // reset user input
         },
         error => console.error('Error adding package:', error)
     );
@@ -27,7 +31,7 @@ export class LessonsComponent implements OnInit{
 
   deletePackage(id: number): void {
     this.learningPackageService.deleteLearningPackage(id).subscribe(() => {
-      // Filtrer le package supprimé de la liste 'learningPackages'
+      // get the new package list
       this.learningPackageService.getLearningPackages().subscribe(data => {
         console.log(data);
         this.learningPackages = data;
@@ -37,6 +41,19 @@ export class LessonsComponent implements OnInit{
       console.error('Error deleting package:', error);
     });
   }
+
+  enableEditing(id: number): void {
+    this.editingStatus[id] = true;
+  }
+
+  updatePackageName(id: number, title: string): void {
+    this.editingStatus[id] = false;
+    this.learningPackageService.updateLearningPackageName(id, title)
+        .subscribe(
+
+        );
+  }
+
 
   ngOnInit(): void {
     this.learningPackageService.getLearningPackages().subscribe(data => {

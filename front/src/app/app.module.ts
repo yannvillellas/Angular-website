@@ -12,13 +12,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { QuestionsComponent } from './questions/questions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LessonsComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    NotFoundComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,

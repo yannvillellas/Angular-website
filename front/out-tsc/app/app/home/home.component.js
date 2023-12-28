@@ -54,7 +54,10 @@ let HomeComponent = exports.HomeComponent = (() => {
             this.learningPackageService = learningPackageService;
             this.learningPackages = [];
             this.showCorrectAnswer = false;
+            this.showAnswerButton = true;
+            this.showPreviousButton = false;
         }
+        //get a random question from a package
         getPackageWithRandomQuestion(id) {
             this.learningPackageService.getLearningPackageById(id).subscribe(packageData => {
                 if (packageData && packageData.questions) { // si il existe et a des questions
@@ -73,27 +76,34 @@ let HomeComponent = exports.HomeComponent = (() => {
                     this.randomQuestion = null;
                 }
             });
+            // reset les boutons
+            this.showAnswerButton = true;
+            this.showPreviousButton = false;
         }
+        //select random question using the user knowledge
         selectRandomQuestion(questions) {
             const weightedQuestions = questions.map(question => {
                 switch (question.userKnowledgeLevel) {
                     case 'low':
-                        return Array(3).fill(question); // apparait 3x dans le tableau
+                        return Array(3).fill(question); // 3x more chances
                     case 'medium':
-                        return Array(2).fill(question); // apparait 2x
+                        return Array(2).fill(question); // 2x more chances
                     case 'high':
-                        return Array(1).fill(question); // apparait une seul fois
+                        return Array(1).fill(question);
                 }
-            }).reduce((acc, val) => acc.concat(val), []); // applatit le tableau en un seul
+            }).reduce((acc, val) => acc.concat(val), []); // get all in one table
             console.log(weightedQuestions);
             if (weightedQuestions.length === 0)
                 return null;
-            const randomIndex = Math.floor(Math.random() * weightedQuestions.length); //selectionne aleatoirement dans le tableau
-            return weightedQuestions[randomIndex]; // retourne la question
+            const randomIndex = Math.floor(Math.random() * weightedQuestions.length); // get randomly from the table
+            return weightedQuestions[randomIndex]; // return the question
         }
         validateAnswer() {
-            this.showCorrectAnswer = true; // Affiche la réponse correcte
+            this.showCorrectAnswer = true; // show the answer
+            this.showAnswerButton = false;
+            this.showPreviousButton = false;
         }
+        //update the user knowledge of the question
         updateUserKnowledgeLevel(questionIndex, knowledgeLevel) {
             this.learningPackageService.updateQuestionKnowledgeLevel(this.selectedPackageId, questionIndex, knowledgeLevel).subscribe(response => {
                 console.log('Knowledge level updated:', response);
@@ -103,6 +113,7 @@ let HomeComponent = exports.HomeComponent = (() => {
                 this.previousCorrectAnswer = this.correctAnswer;
                 this.previousSelectedQuestionIndex = this.selectedQuestionIndex;
                 this.getPackageWithRandomQuestion(this.selectedPackageId);
+                this.showPreviousButton = true;
             }, error => {
                 console.error('Error updating knowledge level:', error);
             });
@@ -112,7 +123,10 @@ let HomeComponent = exports.HomeComponent = (() => {
             this.selectedPackageId = this.previousSelectedPackageId;
             this.correctAnswer = this.previousCorrectAnswer;
             this.selectedQuestionIndex = this.previousSelectedQuestionIndex;
-            this.showCorrectAnswer = true; //permet d'afficher directement la réponse de la dernière question
+            this.showCorrectAnswer = true;
+            // reset buttons
+            this.showAnswerButton = false;
+            this.showPreviousButton = false;
         }
         ngOnInit() {
             this.learningPackageService.getLearningPackages().subscribe(data => {
