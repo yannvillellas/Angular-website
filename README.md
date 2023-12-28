@@ -1,27 +1,37 @@
-# AngularWebsite
+# Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
+blablabla
 
-## Development server
+## Home Page
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+This is the home page of our site. From this page you can access multiple pages, on the bottom left, you can click on the Home, Lessons or About buttons.
+In the middle you can directly access a course using the dropdown list and clicking the button "Go with questions".
+## About Page
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+The purpose of this page is to credit us. You can also see all the learning packages you have, to show this we used the AG Grid technology.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Lessons Page
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+On the lesson page you can access all your packages, and even create new ones.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+You can even edit questions, rename packages and delete them.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Edit Questions Page
+
+
+When you want to edit questions in a package, you have this page. There you can edit the question as well as the expected answer.
+You can also add questions. When your finished you can save you changes or discard them.
+
+## Running questions
+
+
+On the home page, when you click "Go with questions", you'll launch a quizz. It'll start running questions in order, when you think you've got the answer you can click teh "show answer" button.
+
+
+
+the answer will appear and you will be asked the difficulty of the question, when you click a difficulty level, it will show the next question and so on until you finish the quizz.
