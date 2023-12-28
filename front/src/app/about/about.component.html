@@ -10,23 +10,19 @@
 
     <div class="container text-light rounded-5 p-5 position-relative">
         <h1 class="display-1 fw-bold">About us</h1>
-        <h4>This site is a project for a web development course we are following at ESILV (École supérieure d'ingénieurs Léonard-de-Vinci)</h4>
-        <h5>The developers: Yann Villellas, Guillaume Eyssartier, Thomas Soufflet, Marc Viallard.</h5>
+        <p>This site is a project for a web development course we are following at ESILV (École supérieure d'ingénieurs Léonard-de-Vinci).</p>
+        <p>The developers are Yann Villellas, Guillaume Eyssartier, Thomas Soufflet, and Marc Viallard.</p>
         <a>Our code is available here: </a>
         <a href="https://github.com/yannvillellas/Angular-website" target="_blank">https://github.com/yannvillellas/Angular-website</a>
+        <hr class="my-4">
+        <p>Here you can see all the learning packages using AG Grid:</p>
+        <ag-grid-angular
+                class="ag-theme-alpine"
+                style="height: 245px; width: 100%;"
+                [rowData]="rowData$ | async"
+                [columnDefs]="colDefs"
+                (gridReady)="onGridReady($event)"
+        >
+        </ag-grid-angular>
     </div>
-
 </div>
-<div class="container bg-light rounded-5 p-5">
-    <h2>Learning Packages</h2>
-    <ag-grid-angular
-
-    class="ag-theme-alpine"
-    style="height: 500px; width: 100%;"
-    [rowData]="rowData$ | async"
-    [columnDefs]="colDefs"
-    (gridReady)="onGridReady($event)"
-    >
-    </ag-grid-angular>
-</div>
-
