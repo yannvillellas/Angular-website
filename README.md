@@ -1,27 +1,38 @@
-# AngularWebsite
+# Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
+This site is a project for a web development course we are following at ESILV (École supérieure d'ingénieurs Léonard-de-Vinci).
+It is inspired by anki: https://apps.ankiweb.net/
 
-## Development server
+## Home Page
+![Image1](./Images/image-2.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This is the home page of our site. From this page you can access multiple pages, on the bottom left, you can click on the Home, Lessons or About buttons.
+In the middle you can directly access a course using the dropdown list and clicking the button "Go with questions".
+## About Page
+![Image2](./Images/image-3.png)
 
-## Code scaffolding
+The purpose of this page is to credit us. You can also see all the learning packages you have, to show this we used the AG Grid technology.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Lessons Page
+![Image3](./Images/image-4.png)
 
-## Build
+On the lesson page you can access all your packages, and even create new ones.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![Image4](./Images/image-5.png)
 
-## Running unit tests
+You can even edit questions, rename packages and delete them.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Edit Questions Page
+![Image5](./Images/image-6.png)
 
-## Running end-to-end tests
+When you want to edit questions in a package, you have this page. There you can edit the question as well as the expected answer.
+You can also add questions. When your finished you can save you changes or discard them.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Running questions
+![Image6](./Images/image-7.png)
 
-## Further help
+On the home page, when you click "Go with questions", you'll launch a quizz. It'll start running questions in order, when you think you've got the answer you can click the "show answer" button.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Image7](./Images/image-8.png)
+
+the answer will appear and you will be asked the difficulty of the question, when you click a difficulty level, it will show the next question and so on until you finish the quizz.
