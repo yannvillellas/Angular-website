@@ -2,7 +2,7 @@
 
 ## Install the packages
 
-in the front and in the backend folder type :
+In the front and in the backend folder type :
 
 ```powershell
 npm install
